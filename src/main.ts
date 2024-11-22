@@ -1,8 +1,10 @@
 // @ts-check
-import { normalizeName, state, getSummary } from "./common.js";
-import { BoardComponent } from "./components/board.js";
-import { HomeComponent } from "./components/home.js";
+import { normalizeName, state, getSummary } from "./common";
+import { BoardComponent } from "./components/board";
+import { HomeComponent } from "./components/home";
 import m from "mithril";
+
+import "./main.css";
 
 function receiveUpdate(update) {
   const payload = update.payload;

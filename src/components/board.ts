@@ -1,5 +1,6 @@
-// @ts-check
-import { normalizeName, state, getSummary } from "../common.js";
+import { SendingUpdate } from "@/types";
+
+import { normalizeName, state, getSummary } from "../common";
 import m from "mithril";
 import "@chrisoakman/chessboardjs/dist/chessboard-1.0.0.min.js";
 
@@ -27,7 +28,7 @@ export const BoardComponent = {
               class: "btn",
               onclick: () => replay(),
             },
-            "Replay"
+            "Replay",
           ),
           m("br"),
           m(
@@ -36,8 +37,8 @@ export const BoardComponent = {
               class: "btn",
               onclick: () => share(),
             },
-            "Share"
-          )
+            "Share",
+          ),
         );
       } else if (window.webxdc.selfAddr === turn) {
         container.children.push(
@@ -47,8 +48,8 @@ export const BoardComponent = {
               class: "btn",
               onclick: () => surrender(),
             },
-            "Surrender"
-          )
+            "Surrender",
+          ),
         );
       }
     }
@@ -140,7 +141,7 @@ function greySquare(square) {
   let $square = $board.find(".square-" + square);
   $square.css(
     "background",
-    $square.hasClass("black-3c85d") ? "#696969" : "#a9a9a9"
+    $square.hasClass("black-3c85d") ? "#696969" : "#a9a9a9",
   );
 }
 
@@ -191,7 +192,10 @@ function onDrop(source, target) {
   }
 
   state.lastMove = move;
-  const update = { payload: { move: move }, summary: getSummary() };
+  const update: SendingUpdate = {
+    payload: { move: move },
+    summary: getSummary(),
+  };
   if (state.game.isGameOver()) {
     update.info = update.summary;
     update.notify = ["all"];

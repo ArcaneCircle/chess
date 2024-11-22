@@ -1,1 +1,14 @@
-{}
+{
+  "compilerOptions": {
+    "lib": ["dom", "es2015"],
+    "noEmit": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/public/*": ["./public/*"]
+    }
+  },
+  "include": ["src"]
+}

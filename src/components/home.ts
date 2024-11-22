@@ -1,14 +1,13 @@
 // @ts-check
-import { normalizeName, state } from "../common.js";
+import { normalizeName, state } from "../common";
 import m from "mithril";
 
 export const HomeComponent = {
   view: () => {
-    document.getElementById("root").style["align-items"] = "center";
     let div = m("div#home");
     div.children.push(
       m("img#app-icon", { src: "img/bK.svg" }),
-      m("h1#app-name", "Chess Board")
+      m("h1#app-name", "Chess Board"),
     );
     if (state.whiteAddr === window.webxdc.selfAddr) {
       div.children.push(m("h3.sub", "Waiting for opponent..."));
@@ -45,8 +44,8 @@ export const HomeComponent = {
               class: "btn",
               onclick: () => joinGame(),
             },
-            state.whiteAddr ? "Join Game" : "Start Game"
-          )
+            state.whiteAddr ? "Join Game" : "Start Game",
+          ),
         );
       }
     }
