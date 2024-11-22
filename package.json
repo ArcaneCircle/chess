@@ -1,13 +1,13 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
+    "start": "vite --port 3000",
     "build": "vite build",
-    "dev-mini": "vite --port 3000",
-    "dev": "concurrently \"npm run dev-mini\" \"webxdc-dev run http://localhost:3000\"",
-    "typecheck": "tsc --noEmit --allowJs --lib es2015,dom",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "test": "vitest"
+    "emulator": "concurrently \"npm run start\" \"webxdc-dev run http://localhost:3000\"",
+    "fix": "prettier --write .",
+    "check": "prettier --check .",
+    "typecheck": "tsc --noEmit --allowJs --lib es2015,dom"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.16",
@@ -16,6 +16,7 @@
     "jsdom": "^22.1.0",
     "prettier": "2.8.8",
     "toml": "^3.0.0",
+    "typescript": "^5.6.3",
     "vite": "^4.3.2",
     "vite-plugin-zip-pack": "^1.0.5",
     "vitest": "^0.32.2",
@@ -24,7 +25,6 @@
   "dependencies": {
     "@chrisoakman/chessboardjs": "^1.0.0",
     "chess.js": "^1.0.0-beta.6",
-    "jssha": "^3.3.0",
     "mithril": "^2.2.2"
   }
 }

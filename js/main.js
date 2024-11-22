@@ -43,19 +43,23 @@ function receiveUpdate(update) {
     if (
       !state.blackAddr &&
       state.request &&
-      state.selfAddr === state.whiteAddr
+      window.webxdc.selfAddr === state.whiteAddr
     ) {
       state.blackAddr = state.request.addr;
       state.blackName = state.request.name;
-      const desc = normalizeName(state.blackName) + " joined the game";
+      const white = normalizeName(state.whiteName);
+      const black = normalizeName(state.blackName);
+      const info = `Game started! ${white} 🆚 ${black}`;
       const update = {
         payload: {
           blackAddr: state.blackAddr,
           blackName: state.blackName,
         },
-        summary: getSummary(),
+        info,
+        summary: info,
+        notify: ["all"],
       };
-      window.webxdc.sendUpdate(update, desc);
+      window.webxdc.sendUpdate(update, "");
     }
     m.redraw();
   }

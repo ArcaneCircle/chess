@@ -10,13 +10,13 @@ export const HomeComponent = {
       m("img#app-icon", { src: "img/bK.svg" }),
       m("h1#app-name", "Chess Board")
     );
-    if (state.whiteAddr === state.selfAddr) {
+    if (state.whiteAddr === window.webxdc.selfAddr) {
       div.children.push(m("h3.sub", "Waiting for opponent..."));
     } else {
       if (state.whiteAddr) {
         let status;
         if (state.request) {
-          if (state.request.addr === state.selfAddr) {
+          if (state.request.addr === window.webxdc.selfAddr) {
             status = [
               "Waiting for ",
               m("div.tag.white", normalizeName(state.whiteName)),
@@ -56,19 +56,28 @@ export const HomeComponent = {
 
 function joinGame() {
   const name = window.webxdc.selfName;
-  const update = {};
+  const addr = window.webxdc.selfAddr;
   if (!state.whiteAddr) {
-    update.payload = { whiteAddr: state.selfAddr, whiteName: name };
-    update.summary = normalizeName(name) + " is waiting for an opponent";
-    window.webxdc.sendUpdate(update, "Chess: " + update.summary);
-  } else if (!state.blackAddr && state.whiteAddr !== state.selfAddr) {
-    update.payload = {
-      request: state.whiteAddr,
-      addr: state.selfAddr,
-      name: name,
+    const info = normalizeName(name) + " is waiting for an opponent";
+    const update = {
+      payload: { whiteAddr: addr, whiteName: name },
+      info,
+      summary: info,
+      notify: ["all"],
     };
-    update.summary = normalizeName(name) + " requested to join game";
-    window.webxdc.sendUpdate(update, "Chess: " + update.summary);
+    window.webxdc.sendUpdate(update, "");
+  } else if (!state.blackAddr && state.whiteAddr !== addr) {
+    const info = normalizeName(name) + " requested to join game";
+    const update = {
+      payload: {
+        request: state.whiteAddr,
+        addr,
+        name,
+      },
+      info,
+      notify: ["all"],
+    };
+    window.webxdc.sendUpdate(update, "");
   } else {
     console.log("Warning: ignoring call to joinGame()");
   }

@@ -1,9 +1,7 @@
 // @ts-check
 import { Chess } from "chess.js";
-import jsSHA from "jssha";
 
 export const state = {
-  selfAddr: hashText(window.webxdc.selfAddr),
   whiteAddr: undefined,
   whiteName: undefined,
   blackAddr: undefined,
@@ -36,21 +34,21 @@ export function getSummary() {
     const winner = normalizeName(
       state.game.turn() === "b" ? state.whiteName : state.blackName
     );
-    summary = "Game over, " + name + " is in checkmate, " + winner + " wins";
+    summary = `Checkmate! ${winner} wins 🎉`;
   } else if (state.surrenderAddr) {
     // used by "share" button
     const winner =
       state.game.turn() === "b"
         ? normalizeName(state.whiteName)
         : normalizeName(state.blackName);
-    summary = "Game over, " + name + " surrenders, " + winner + " wins";
+    summary = `${name} surrenders, ${winner} wins 🎉`;
   } else if (state.game.isDraw()) {
-    summary = "Game over, drawn position";
+    summary = "Game over, it is a draw! 🤝";
   } else {
     // game still on
-    summary = "Turn: " + name;
+    summary = `${name} it's your turn`;
     if (state.game.inCheck()) {
-      summary += " (in check)";
+      summary += " (in check!)";
     }
   }
   return summary;

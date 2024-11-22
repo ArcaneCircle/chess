@@ -39,7 +39,7 @@ export const BoardComponent = {
             "Share"
           )
         );
-      } else if (state.selfAddr === turn) {
+      } else if (window.webxdc.selfAddr === turn) {
         container.children.push(
           m(
             "a",
@@ -75,7 +75,8 @@ export const BoardComponent = {
       draggable: true,
       pieceTheme: "img/{piece}.svg",
       position: state.game.fen(),
-      orientation: state.blackAddr === state.selfAddr ? "black" : "white",
+      orientation:
+        state.blackAddr === window.webxdc.selfAddr ? "black" : "white",
       onDragStart: onDragStart,
       onDrop: onDrop,
       onSnapEnd: this.onSnapEnd.bind(this),
@@ -148,7 +149,7 @@ function onDragStart(source, piece, position, orientation) {
   if (state.inReplayMode || state.surrenderAddr || state.game.isGameOver())
     return false;
 
-  const addr = state.selfAddr;
+  const addr = window.webxdc.selfAddr;
   if (
     (state.game.turn() === "w" &&
       (state.whiteAddr !== addr || piece.search(/^b/) !== -1)) ||
@@ -190,12 +191,16 @@ function onDrop(source, target) {
   }
 
   state.lastMove = move;
-  const desc = "Chess: " + source + "-" + target,
-    update = { payload: { move: move }, summary: getSummary() };
+  const update = { payload: { move: move }, summary: getSummary() };
   if (state.game.isGameOver()) {
     update.info = update.summary;
+    update.notify = ["all"];
+  } else {
+    update.notify = [
+      state.game.turn() === "w" ? state.whiteAddr : state.blackAddr,
+    ];
   }
-  window.webxdc.sendUpdate(update, desc);
+  window.webxdc.sendUpdate(update, "");
 }
 
 function replay() {
@@ -238,18 +243,15 @@ function surrender() {
     return;
   }
 
-  const winner = normalizeName(
-    state.game.turn() === "b" ? state.whiteName : state.blackName
-  );
+  // set state.surrenderAddr so getSummary() gives correct output
+  state.surrenderAddr = window.webxdc.selfAddr;
+
+  const summary = getSummary();
   const update = {
-    payload: { surrenderAddr: state.selfAddr },
-    summary:
-      normalizeName(window.webxdc.selfName) +
-      " surrenders, " +
-      winner +
-      " wins",
+    payload: { surrenderAddr: window.webxdc.selfAddr },
+    info: summary,
+    summary,
+    notify: ["all"],
   };
-  update.info = update.summary;
-  const desc = "Chess: " + update.summary;
-  window.webxdc.sendUpdate(update, desc);
+  window.webxdc.sendUpdate(update, "");
 }
