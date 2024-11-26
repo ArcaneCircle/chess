@@ -1,7 +1,7 @@
 import { Webxdc, SendingStatusUpdate } from "@webxdc/types";
 
 interface SendingUpdate extends SendingStatusUpdate<any> {
-  notify?: string[];
+  notify?: { [key: string]: string };
 }
 
 declare global {

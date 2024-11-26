@@ -40,7 +40,7 @@ export function getSummary() {
     summary = "Game over, it is a draw! 🤝";
   } else {
     // game still on
-    summary = `${name} it's your turn`;
+    summary = `Turn: ${name}`;
     if (state.game.inCheck()) {
       summary += " (in check!)";
     }
