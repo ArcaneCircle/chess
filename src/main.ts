@@ -58,8 +58,8 @@ function receiveUpdate(update) {
           blackName: state.blackName,
         },
         info,
-        summary: info,
-        notify: ["all"],
+        summary: getSummary(),
+        notify: { "*": info },
       };
       window.webxdc.sendUpdate(update, "");
     }

@@ -198,11 +198,12 @@ function onDrop(source, target) {
   };
   if (state.game.isGameOver()) {
     update.info = update.summary;
-    update.notify = ["all"];
+    update.notify = { "*": update.info };
   } else {
-    update.notify = [
-      state.game.turn() === "w" ? state.whiteAddr : state.blackAddr,
-    ];
+    const info =
+      "It's your turn" + (state.game.inCheck() ? " (in check!)" : "");
+    const addr = state.game.turn() === "w" ? state.whiteAddr : state.blackAddr;
+    update.notify = { [addr]: info };
   }
   window.webxdc.sendUpdate(update, "");
 }
@@ -255,7 +256,7 @@ function surrender() {
     payload: { surrenderAddr: window.webxdc.selfAddr },
     info: summary,
     summary,
-    notify: ["all"],
+    notify: { "*": summary },
   };
   window.webxdc.sendUpdate(update, "");
 }

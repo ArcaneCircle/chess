@@ -62,7 +62,7 @@ function joinGame() {
       payload: { whiteAddr: addr, whiteName: name },
       info,
       summary: info,
-      notify: ["all"],
+      notify: { "*": info },
     };
     window.webxdc.sendUpdate(update, "");
   } else if (!state.blackAddr && state.whiteAddr !== addr) {
@@ -74,7 +74,7 @@ function joinGame() {
         name,
       },
       info,
-      notify: ["all"],
+      notify: { [state.whiteAddr]: info },
     };
     window.webxdc.sendUpdate(update, "");
   } else {
