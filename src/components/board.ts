@@ -1,4 +1,4 @@
-import { SendingUpdate } from "@/types";
+import { SendingStatusUpdate } from "@webxdc/types";
 
 import { normalizeName, state, getSummary } from "../common";
 import m from "mithril";
@@ -192,7 +192,7 @@ function onDrop(source, target) {
   }
 
   state.lastMove = move;
-  const update: SendingUpdate = {
+  const update: SendingStatusUpdate<any> = {
     payload: { move: move },
     summary: getSummary(),
   };

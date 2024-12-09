@@ -16,7 +16,7 @@
     "concurrently": "latest",
     "prettier": "latest",
     "typescript": "^5.7.2",
-    "vite": "^6.0.0"
+    "vite": "latest"
   },
   "dependencies": {
     "@chrisoakman/chessboardjs": "^1.0.0",
