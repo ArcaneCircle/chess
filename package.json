@@ -12,8 +12,6 @@
     "@types/jquery": "^3.5.32",
     "@webxdc/types": "latest",
     "@webxdc/vite-plugins": "latest",
-    "@webxdc/webxdc-dev": "latest",
-    "concurrently": "latest",
     "prettier": "latest",
     "typescript": "^5.7.2",
     "vite": "latest"

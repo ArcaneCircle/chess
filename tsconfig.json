@@ -4,11 +4,7 @@
     "noEmit": true,
     "allowJs": true,
     "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/public/*": ["./public/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["src"]
 }
